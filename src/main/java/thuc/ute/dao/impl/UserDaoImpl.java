@@ -211,4 +211,33 @@ public class UserDaoImpl implements IUserDao {
             em.close();
         }
     }
+
+    @Override
+    public void update(User user) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        EntityTransaction transaction =
+                em.getTransaction();
+
+        try {
+            transaction.begin();
+
+            em.merge(user);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw e;
+
+        } finally {
+            em.close();
+        }
+    }
 }

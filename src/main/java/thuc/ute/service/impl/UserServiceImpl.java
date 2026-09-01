@@ -148,4 +148,9 @@ public class UserServiceImpl
         return userDao
                 .checkExistPhone(phone);
     }
+
+    @Override
+    public void update(User user) {
+        userDao.update(user);
+    }
 }

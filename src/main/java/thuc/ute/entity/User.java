@@ -2,6 +2,7 @@ package thuc.ute.entity;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -81,6 +82,18 @@ public class User implements Serializable {
 
     @Column(name = "createdDate")
     private LocalDate createdDate;
+
+    @Column(name = "active")
+    private boolean active;
+
+    @Column(
+            name = "otp",
+            columnDefinition = "NVARCHAR(10)"
+    )
+    private String otp;
+
+    @Column(name = "otpExpiry")
+    private LocalDateTime otpExpiry;
 
     @Override
     public String toString() {

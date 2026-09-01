@@ -49,4 +49,6 @@ public interface IUserService {
     boolean checkExistPhone(
             String phone
     );
+
+    void update(User user);
 }

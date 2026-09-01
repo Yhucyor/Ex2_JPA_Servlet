@@ -1,6 +1,7 @@
 package thuc.ute.controller;
 
 import java.io.IOException;
+import java.time.Duration;
 import java.time.LocalDateTime;
 
 import jakarta.mail.MessagingException;
@@ -46,6 +47,7 @@ public class ForgotPasswordController extends HttpServlet {
         String email =
                 req.getParameter("email");
 
+        // 1. Kiểm tra email rỗng
         if (email == null
                 || email.trim().isEmpty()) {
 
@@ -61,6 +63,7 @@ public class ForgotPasswordController extends HttpServlet {
             return;
         }
 
+        // 2. Tìm user theo email
         User user =
                 userService.findByEmail(
                         email.trim()
@@ -80,11 +83,49 @@ public class ForgotPasswordController extends HttpServlet {
             return;
         }
 
+        // 3. Kiểm tra OTP cũ còn hiệu lực hay không
+        if (user.getOtp() != null
+                && user.getOtpExpiry() != null
+                && LocalDateTime.now()
+                .isBefore(user.getOtpExpiry())) {
+
+            long secondsLeft =
+                    Duration.between(
+                            LocalDateTime.now(),
+                            user.getOtpExpiry()
+                    ).getSeconds();
+
+            long minutesLeft =
+                    secondsLeft / 60;
+
+            long remainSeconds =
+                    secondsLeft % 60;
+
+            req.setAttribute(
+                    "alert",
+                    "Mã OTP đã được gửi. "
+                            + "Vui lòng chờ "
+                            + minutesLeft
+                            + " phút "
+                            + remainSeconds
+                            + " giây trước khi yêu cầu mã mới."
+            );
+
+            req.getRequestDispatcher(
+                    "/views/forgot-password.jsp"
+            ).forward(req, resp);
+
+            return;
+        }
+
+        // 4. OTP cũ hết hạn -> sinh OTP mới
         String otp =
                 OtpUtil.generateOtp();
 
+        // 5. Lưu OTP mới
         user.setOtp(otp);
 
+        // OTP có hiệu lực 5 phút
         user.setOtpExpiry(
                 LocalDateTime.now()
                         .plusMinutes(5)
@@ -94,17 +135,21 @@ public class ForgotPasswordController extends HttpServlet {
 
         try {
 
+            // 6. Gửi OTP qua email
             EmailUtils.sendOtp(
                     user.getEmail(),
                     otp
             );
 
+            // 7. Lưu email vào session
+            // để controller xác nhận OTP biết user nào
             req.getSession()
                     .setAttribute(
                             "forgotEmail",
                             user.getEmail()
                     );
 
+            // 8. Chuyển sang trang nhập OTP
             resp.sendRedirect(
                     req.getContextPath()
                             + "/forgot-password/verify"
@@ -116,7 +161,7 @@ public class ForgotPasswordController extends HttpServlet {
 
             req.setAttribute(
                     "alert",
-                    "Không thể gửi OTP qua email"
+                    "Không thể gửi mã OTP qua email"
             );
 
             req.getRequestDispatcher(

@@ -32,18 +32,22 @@ public class UserServiceImpl
             String password) {
 
         User user =
-                findByUsername(username);
+                userDao.findByUsername(username);
 
-        if (user != null
-                && password.equals(
-                user.getPassword())) {
-
-            return user;
+        if (user == null) {
+            return null;
         }
 
-        return null;
-    }
+        if (!user.isActive()) {
+            return null;
+        }
 
+        if (!user.getPassword().equals(password)) {
+            return null;
+        }
+
+        return user;
+    }
     @Override
     public User findByUsername(
             String username) {

@@ -15,6 +15,7 @@
         <class>thuc.ute.entity.Category</class>
         <class>thuc.ute.entity.Video</class>
         <class>thuc.ute.entity.User</class>
+        <class>thuc.ute.entity.Product</class>
 
         <properties>
 

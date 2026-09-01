@@ -52,6 +52,9 @@ public class Category implements Serializable {
     @OneToMany(mappedBy = "category")
     private List<Video> videos;
 
+    @OneToMany(mappedBy = "category")
+    private List<Product> products;
+
     public Video addVideo(Video video) {
         getVideos().add(video);
         video.setCategory(this);

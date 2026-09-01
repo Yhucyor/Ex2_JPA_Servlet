@@ -45,6 +45,9 @@ public class Product implements Serializable {
     @Column(name = "Price", nullable = false)
     private double price;
 
+    @Column(name = "Quantity")
+    private Integer quantity = 0;
+
     @Column(
             name = "Description",
             columnDefinition = "NVARCHAR(1000)"

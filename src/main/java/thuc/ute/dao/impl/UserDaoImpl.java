@@ -240,4 +240,42 @@ public class UserDaoImpl implements IUserDao {
             em.close();
         }
     }
+
+    @Override
+    public User login(String username, String password) {
+        return null;
+    }
+
+    @Override
+    public User findByEmail(String email) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        try {
+
+            String jpql =
+                    "SELECT u FROM User u "
+                            + "WHERE u.email = :email";
+
+            TypedQuery<User> query =
+                    em.createQuery(
+                            jpql,
+                            User.class
+                    );
+
+            query.setParameter(
+                    "email",
+                    email
+            );
+
+            return query.getResultStream()
+                    .findFirst()
+                    .orElse(null);
+
+        } finally {
+
+            em.close();
+        }
+    }
 }

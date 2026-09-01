@@ -51,4 +51,6 @@ public interface IUserService {
     );
 
     void update(User user);
+
+    User findByEmail(String email);
 }

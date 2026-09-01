@@ -21,4 +21,9 @@ public interface IUserDao {
     boolean checkExistPhone(String phone);
 
     void update(User user);
+
+    User login(String username, String password);
+
+    User findByEmail(String email);
+
 }

@@ -57,20 +57,26 @@
 
     <br>
 
-    <button type="submit">
-        Đăng nhập
-    </button>
+<button type="submit">
+    Đăng nhập
+</button>
 
 </form>
 
 <br>
 
 <p>
+    <a href="${pageContext.request.contextPath}/forgot-password">
+        Quên mật khẩu?
+    </a>
+</p>
+
+<p>
     Chưa có tài khoản?
+
     <a href="${pageContext.request.contextPath}/register">
         Đăng ký
     </a>
 </p>
-
 </body>
 </html>

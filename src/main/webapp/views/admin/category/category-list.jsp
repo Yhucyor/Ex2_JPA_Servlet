@@ -4,11 +4,41 @@
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<a href="<c:url value="/admin/category/add"/>">
+<c:choose>
+
+    <c:when test="${not empty sessionScope.account}">
+
+        <h3>
+            Xin chào,
+            ${sessionScope.account.username}
+        </h3>
+
+        <a href="${pageContext.request.contextPath}/logout">
+            Logout
+        </a>
+
+    </c:when>
+
+    <c:otherwise>
+
+        <p style="color:red;">
+            Hiện tại chưa có tài khoản đăng nhập trong Session.
+        </p>
+
+        <a href="${pageContext.request.contextPath}/login">
+            Login
+        </a>
+
+    </c:otherwise>
+
+</c:choose>
+
+<br><br>
+
+<a href="${pageContext.request.contextPath}/admin/category/add">
     Add Category
 </a>
 
-<br>
 <hr>
 
 <table border="1" width="100%">

@@ -3,6 +3,7 @@
          pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="vi">
@@ -271,13 +272,32 @@
 
                         <c:when test="${not empty product.image}">
 
-                            <img
-                                src="${product.image}"
-                                class="product-image"
-                                alt="${product.productName}"
-                                onerror="this.onerror=null;
-                                         this.src='https://placehold.co/400x300?text=No+Image';"
-                            >
+                            <c:choose>
+
+                                <c:when test="${fn:startsWith(product.image, 'http://')
+                                        or fn:startsWith(product.image, 'https://')}">
+                                    <c:set var="imageUrl"
+                                           value="${product.image}" />
+                                </c:when>
+
+                                <c:otherwise>
+                                    <c:set var="imageUrl"
+                                           value="${pageContext.request.contextPath}/image?fname=${product.image}" />
+                                </c:otherwise>
+
+                            </c:choose>
+
+                            <a href="${pageContext.request.contextPath}/product/detail?id=${product.productId}">
+
+                                <img
+                                    src="${imageUrl}"
+                                    class="product-image"
+                                    alt="${product.productName}"
+                                    onerror="this.onerror=null;
+                                             this.src='https://placehold.co/400x300?text=No+Image';"
+                                >
+
+                            </a>
 
                         </c:when>
 
@@ -300,7 +320,12 @@
 
                     <div class="product-name">
 
-                        ${product.productName}
+                        <a href="${pageContext.request.contextPath}/product/detail?id=${product.productId}"
+                           style="text-decoration: none; color: inherit;">
+
+                            ${product.productName}
+
+                        </a>
 
                     </div>
 

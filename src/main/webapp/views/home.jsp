@@ -124,10 +124,14 @@
 
                         </c:choose>
 
-                        <img
-                                src="${imageUrl}"
-                                class="product-image"
-                                alt="${product.productName}">
+                        <a href="${pageContext.request.contextPath}/product/detail?id=${product.productId}">
+
+                            <img
+                                    src="${imageUrl}"
+                                    class="product-image"
+                                    alt="${product.productName}">
+
+                        </a>
 
                     </c:when>
 
@@ -142,7 +146,14 @@
                 </c:choose>
 
                 <div class="product-name">
-                    ${product.productName}
+
+                    <a href="${pageContext.request.contextPath}/product/detail?id=${product.productId}"
+                       style="text-decoration: none; color: inherit;">
+
+                        ${product.productName}
+
+                    </a>
+
                 </div>
 
                 <div class="product-price">

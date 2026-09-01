@@ -1,0 +1,388 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(
+            135deg,
+            #dbeafe,
+            #eff6ff,
+            #f8fafc
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #1f2937;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 430px;
+    background: rgba(255, 255, 255, 0.96);
+    padding: 42px 42px 36px;
+    border-radius: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.75);
+    box-shadow:
+            0 16px 40px
+            rgba(37, 99, 235, 0.12);
+    backdrop-filter: blur(6px);
+}
+
+.register-card {
+    max-width: 680px;
+    max-height: calc(100vh - 40px);
+    padding: 20px 34px 18px;
+    overflow-y: auto;
+}
+
+.register-card form {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: 16px;
+    row-gap: 10px;
+}
+
+.register-card .login-title {
+    font-size: 26px;
+    margin-bottom: 2px;
+}
+
+.register-card .login-subtitle {
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.register-card .form-group {
+    margin-bottom: 0;
+}
+
+.register-card .form-group label {
+    margin-bottom: 3px;
+    font-size: 13px;
+}
+
+.register-card .form-control {
+    height: 40px;
+    padding: 0 12px;
+    font-size: 13px;
+    border-radius: 8px;
+}
+
+.register-card .btn-login {
+    grid-column: 1 / -1;
+    height: 40px;
+    margin-top: 2px;
+    font-size: 15px;
+    border-radius: 8px;
+}
+
+.register-card .register {
+    margin-top: 10px;
+    font-size: 14px;
+}
+
+.register-card .back-home {
+    margin-top: 7px;
+}
+
+.forgot-card {
+    max-width: 440px;
+    padding-top: 36px;
+    padding-bottom: 32px;
+}
+
+.forgot-card .login-subtitle {
+    line-height: 1.5;
+    margin-bottom: 26px;
+}
+
+.forgot-card .back-home {
+    margin-top: 22px;
+}
+
+.otp-card {
+    max-width: 430px;
+    padding-top: 36px;
+    padding-bottom: 32px;
+}
+
+.otp-card .login-subtitle {
+    line-height: 1.5;
+    margin-bottom: 26px;
+}
+
+.otp-input {
+    text-align: center;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 8px;
+}
+
+.otp-input::placeholder {
+    font-size: 20px;
+    font-weight: 600;
+    letter-spacing: 8px;
+}
+
+.otp-card .back-home {
+    margin-top: 22px;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 6px;
+    background: linear-gradient(
+            90deg,
+            #0f172a,
+            #2563eb
+    );
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #94a3b8;
+    font-size: 15px;
+    margin-bottom: 30px;
+}
+
+.alert {
+    padding: 13px 15px;
+    margin-bottom: 20px;
+    border-radius: 9px;
+    font-size: 14px;
+}
+
+.alert-error {
+    background: #fef2f2;
+    color: #dc2626;
+    border: 1px solid #fecaca;
+}
+
+.alert-success {
+    background: #f0fdf4;
+    color: #15803d;
+    border: 1px solid #bbf7d0;
+}
+
+.form-group {
+    margin-bottom: 22px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #1f2937;
+}
+
+.form-control {
+    width: 100%;
+    height: 52px;
+    padding: 0 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #ffffff;
+    font-size: 15px;
+    color: #1f2937;
+    outline: none;
+    transition: 0.2s ease;
+}
+
+.form-control::placeholder {
+    color: #9ca3af;
+}
+
+.form-control:focus {
+    border-color: #2563eb;
+    box-shadow:
+            0 0 0 4px
+            rgba(37, 99, 235, 0.10);
+}
+
+.password-box {
+    position: relative;
+}
+
+.password-box .form-control {
+    padding-right: 55px;
+}
+
+.show-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 35px;
+    height: 35px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 17px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.show-password:hover {
+    color: #2563eb;
+}
+
+.login-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+}
+
+.remember {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    color: #64748b;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.remember input {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: #2563eb;
+}
+
+.forgot-password {
+    color: #2563eb;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+.btn-login {
+    width: 100%;
+    height: 52px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(
+            90deg,
+            #2563eb,
+            #1d4ed8,
+            #3b82f6
+    );
+    background-size: 200% auto;
+    color: white;
+    font-size: 17px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.3s ease;
+    box-shadow:
+            0 9px 22px
+            rgba(37, 99, 235, 0.25);
+}
+
+.btn-login:hover {
+    background-position: right center;
+    transform: translateY(-2px);
+    box-shadow:
+            0 12px 28px
+            rgba(37, 99, 235, 0.34);
+}
+
+.btn-login:active {
+    transform: translateY(0);
+}
+
+.register {
+    margin-top: 30px;
+    text-align: center;
+    color: #64748b;
+    font-size: 16px;
+}
+
+.register a {
+    color: #2563eb;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.register a:hover {
+    text-decoration: underline;
+}
+
+.back-home {
+    text-align: center;
+    margin-top: 26px;
+}
+
+.back-home a {
+    color: #64748b;
+    text-decoration: none;
+    font-size: 15px;
+    transition: 0.2s;
+}
+
+.back-home a:hover {
+    color: #2563eb;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 20px;
+    }
+
+    .login-card {
+        padding: 40px 25px;
+        border-radius: 16px;
+    }
+
+    .register-card {
+        max-height: calc(100vh - 40px);
+        padding: 14px 22px;
+    }
+
+    .register-card form {
+        grid-template-columns: 1fr;
+        row-gap: 8px;
+    }
+
+    .login-title {
+        font-size: 31px;
+    }
+
+    .login-subtitle {
+        font-size: 15px;
+        margin-bottom: 30px;
+    }
+
+    .form-control {
+        height: 54px;
+    }
+
+    .btn-login {
+        height: 56px;
+    }
+
+    .login-options {
+        gap: 15px;
+    }
+}
+
+@media (max-width: 420px) {
+    .login-options {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}

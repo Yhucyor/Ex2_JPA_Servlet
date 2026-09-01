@@ -10,50 +10,123 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Quên mật khẩu</title>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/login.css">
+
+    <style>
+        .btn-verify {
+            width: 100%;
+            height: 50px;
+
+            margin-top: 12px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            border: 1px solid #2563eb;
+            border-radius: 10px;
+
+            background: white;
+
+            color: #2563eb;
+
+            text-decoration: none;
+
+            font-size: 16px;
+            font-weight: 600;
+
+            transition: 0.2s;
+        }
+
+        .btn-verify:hover {
+            background: #eff6ff;
+        }
+    </style>
+
 </head>
 
 <body>
 
-<h2>Quên mật khẩu</h2>
+<div class="login-card forgot-card">
 
-<p>
-    Nhập email đã đăng ký để nhận mã OTP.
-</p>
+    <h1 class="login-title">
+        Quên mật khẩu
+    </h1>
 
-<c:if test="${not empty alert}">
-    <p style="color:red;">
-        ${alert}
-    </p>
-</c:if>
-
-<form action="${pageContext.request.contextPath}/forgot-password"
-      method="post">
-
-    <div>
-        <label>Email:</label>
-
-        <br>
-
-        <input type="email"
-               name="email"
-               value="${param.email}"
-               required>
+    <div class="login-subtitle">
+        Nhập email đã đăng ký để nhận mã OTP
     </div>
 
-    <br>
 
-    <button type="submit">
-        Gửi OTP
-    </button>
+    <c:if test="${not empty alert}">
 
-</form>
+        <div class="alert alert-error">
+            ${alert}
+        </div>
 
-<br>
+    </c:if>
 
-<a href="${pageContext.request.contextPath}/login">
-    Quay lại đăng nhập
-</a>
+
+    <form action="${pageContext.request.contextPath}/forgot-password"
+          method="post">
+
+        <div class="form-group">
+
+            <label for="email">
+                Email
+            </label>
+
+            <input type="email"
+                   id="email"
+                   name="email"
+                   class="form-control"
+                   placeholder="Nhập email"
+                   value="${param.email}"
+                   autocomplete="email"
+                   required>
+
+        </div>
+
+
+        <button type="submit"
+                class="btn-login">
+
+            Gửi OTP
+
+        </button>
+
+    </form>
+
+
+    <!-- CHỈ HIỆN KHI ĐÃ CÓ EMAIL QUÊN MẬT KHẨU TRONG SESSION -->
+
+    <c:if test="${not empty sessionScope.forgotEmail}">
+
+        <a href="${pageContext.request.contextPath}/forgot-password/verify"
+           class="btn-verify">
+
+            Nhập mã OTP
+
+        </a>
+
+    </c:if>
+
+
+    <div class="back-home">
+
+        <a href="${pageContext.request.contextPath}/login">
+            ← Quay lại đăng nhập
+        </a>
+
+    </div>
+
+</div>
 
 </body>
 

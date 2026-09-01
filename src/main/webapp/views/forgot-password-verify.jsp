@@ -10,51 +10,66 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Xác nhận OTP</title>
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/login.css">
 </head>
 
 <body>
 
-<h2>Xác nhận OTP</h2>
+<div class="login-card otp-card">
 
-<p>
-    Mã OTP đã được gửi đến email của bạn.
-</p>
+    <h1 class="login-title">
+        Xác nhận OTP
+    </h1>
 
-<c:if test="${not empty alert}">
-    <p style="color:red;">
-        ${alert}
-    </p>
-</c:if>
-
-<form action="${pageContext.request.contextPath}/forgot-password/verify"
-      method="post">
-
-    <div>
-        <label>Mã OTP:</label>
-
-        <br>
-
-        <input type="text"
-               name="otp"
-               maxlength="6"
-               placeholder="Nhập mã OTP"
-               required>
+    <div class="login-subtitle">
+        Nhập mã OTP đã được gửi đến email của bạn
     </div>
 
-    <br>
+    <c:if test="${not empty alert}">
+        <div class="alert alert-error">
+            ${alert}
+        </div>
+    </c:if>
 
-    <button type="submit">
-        Xác nhận OTP
-    </button>
+    <form action="${pageContext.request.contextPath}/forgot-password/verify"
+          method="post">
 
-</form>
+        <div class="form-group">
+            <label for="otp">
+                Mã OTP
+            </label>
 
-<br>
+            <input type="text"
+                   id="otp"
+                   name="otp"
+                   class="form-control otp-input"
+                   maxlength="6"
+                   inputmode="numeric"
+                   pattern="[0-9]{6}"
+                   placeholder="000000"
+                   autocomplete="one-time-code"
+                   required>
+        </div>
 
-<a href="${pageContext.request.contextPath}/forgot-password">
-    Quay lại
-</a>
+        <button type="submit"
+                class="btn-login">
+            Xác nhận OTP
+        </button>
+
+    </form>
+
+    <div class="back-home">
+        <a href="${pageContext.request.contextPath}/forgot-password">
+            ← Quay lại
+        </a>
+    </div>
+
+</div>
 
 </body>
 

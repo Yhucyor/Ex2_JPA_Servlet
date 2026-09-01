@@ -1,82 +1,221 @@
-<%@ page language="java"
+﻿<%@ page language="java"
          contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8" %>
 
-<%@ taglib prefix="c"
-           uri="jakarta.tags.core" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
     <title>Đăng nhập</title>
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/login.css">
+
 </head>
+
 
 <body>
 
-<h2>Đăng nhập</h2>
+<div class="login-card">
 
-<c:if test="${not empty alert}">
-    <p style="color: red;">
-        ${alert}
-    </p>
-</c:if>
+    <!-- =========================
+         TITLE
+         ========================= -->
 
-<form action="${pageContext.request.contextPath}/login"
-      method="post">
+    <h1 class="login-title">
+        Đăng nhập
+    </h1>
 
-    <div>
-        <label>Tên đăng nhập:</label>
-        <br>
-
-        <input type="text"
-               name="username"
-               value="${param.username}"
-               required>
+    <div class="login-subtitle">
+        Sử dụng tài khoản của bạn
     </div>
 
-    <br>
 
-    <div>
-        <label>Mật khẩu:</label>
-        <br>
+    <!-- =========================
+         ERROR MESSAGE
+         ========================= -->
 
-        <input type="password"
-               name="password"
-               required>
+    <c:if test="${not empty alert}">
+
+        <div class="alert alert-error">
+            ${alert}
+        </div>
+
+    </c:if>
+
+
+    <!-- =========================
+         SUCCESS MESSAGE
+         ========================= -->
+
+    <c:if test="${not empty message}">
+
+        <div class="alert alert-success">
+            ${message}
+        </div>
+
+    </c:if>
+
+
+    <!-- =========================
+         LOGIN FORM
+         ========================= -->
+
+    <form action="${pageContext.request.contextPath}/login"
+          method="post">
+
+
+        <!-- USERNAME -->
+
+        <div class="form-group">
+
+            <label for="username">
+                Tên đăng nhập
+            </label>
+
+            <input
+                    type="text"
+                    id="username"
+                    name="username"
+                    class="form-control"
+                    placeholder="Nhập tên đăng nhập"
+                    value="${username}"
+                    autocomplete="username"
+                    required
+            >
+
+        </div>
+
+
+        <!-- PASSWORD -->
+
+        <div class="form-group">
+
+            <label for="password">
+                Mật khẩu
+            </label>
+
+            <div class="password-box">
+
+                <input
+                        type="password"
+                        id="password"
+                        name="password"
+                        class="form-control"
+                        placeholder="Nhập mật khẩu"
+                        autocomplete="current-password"
+                        required
+                >
+
+                <button
+                        type="button"
+                        class="show-password"
+                        onclick="togglePassword()"
+                        title="Hiện/ẩn mật khẩu">
+                    &#128065;
+
+                </button>
+
+            </div>
+
+        </div>
+
+
+        <!-- REMEMBER + FORGOT -->
+
+        <div class="login-options">
+
+            <label class="remember">
+
+                <input
+                        type="checkbox"
+                        name="remember"
+                >
+
+                Ghi nhớ đăng nhập
+
+            </label>
+
+
+            <a
+                    href="${pageContext.request.contextPath}/forgot-password"
+                    class="forgot-password">
+
+                Quên mật khẩu?
+
+            </a>
+
+        </div>
+
+
+        <!-- LOGIN BUTTON -->
+
+        <button
+                type="submit"
+                class="btn-login">
+
+            Đăng nhập
+
+        </button>
+
+    </form>
+
+
+    <!-- =========================
+         REGISTER
+         ========================= -->
+
+    <div class="register">
+
+        Bạn chưa có tài khoản?
+
+        <a href="${pageContext.request.contextPath}/register">
+            Đăng ký ngay
+        </a>
+
     </div>
 
-    <br>
 
-    <div>
-        <input type="checkbox"
-               name="remember">
+    <!-- =========================
+         HOME
+         ========================= -->
 
-        <label>Ghi nhớ đăng nhập</label>
+    <div class="back-home">
+
+        <a href="${pageContext.request.contextPath}/home">
+            ← Quay về trang chủ
+        </a>
+
     </div>
 
-    <br>
+</div>
 
-<button type="submit">
-    Đăng nhập
-</button>
 
-</form>
+<script>
 
-<br>
+    function togglePassword() {
 
-<p>
-    <a href="${pageContext.request.contextPath}/forgot-password">
-        Quên mật khẩu?
-    </a>
-</p>
+        const password =
+                document.getElementById("password");
 
-<p>
-    Chưa có tài khoản?
+        if (password.type === "password") {
 
-    <a href="${pageContext.request.contextPath}/register">
-        Đăng ký
-    </a>
-</p>
+            password.type = "text";
+
+        } else {
+
+            password.type = "password";
+        }
+    }
+
+</script>
+
 </body>
+
 </html>
+

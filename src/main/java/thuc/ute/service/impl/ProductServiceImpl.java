@@ -36,4 +36,9 @@ public class ProductServiceImpl implements IProductService {
     public void delete(int id) {
         productDao.delete(id);
     }
+
+    @Override
+    public List<Product> findLatest(int limit) {
+        return productDao.findLatest(limit);
+    }
 }

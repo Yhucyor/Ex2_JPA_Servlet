@@ -15,4 +15,6 @@ public interface IProductDao {
     void update(Product product);
 
     void delete(int id);
+
+    List<Product> findLatest(int limit);
 }

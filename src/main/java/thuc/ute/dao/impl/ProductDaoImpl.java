@@ -5,6 +5,7 @@ import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 
+import jakarta.persistence.TypedQuery;
 import thuc.ute.config.JpaConfig;
 import thuc.ute.dao.IProductDao;
 import thuc.ute.entity.Product;
@@ -146,6 +147,28 @@ public class ProductDaoImpl implements IProductDao {
 
         } finally {
 
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Product> findLatest(int limit) {
+
+        EntityManager em = JpaConfig.getEntityManager();
+
+        try {
+
+            TypedQuery<Product> query = em.createQuery(
+                    "SELECT p FROM Product p " +
+                            "ORDER BY p.createdDate DESC",
+                    Product.class
+            );
+
+            query.setMaxResults(limit);
+
+            return query.getResultList();
+
+        } finally {
             em.close();
         }
     }

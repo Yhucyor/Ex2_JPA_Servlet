@@ -17,4 +17,8 @@ public interface IProductDao {
     void delete(int id);
 
     List<Product> findLatest(int limit);
+
+    List<Product> findAll(int page, int pageSize);
+
+    int count();
 }

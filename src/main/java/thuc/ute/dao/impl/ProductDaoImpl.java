@@ -172,4 +172,46 @@ public class ProductDaoImpl implements IProductDao {
             em.close();
         }
     }
+
+    @Override
+    public List<Product> findAll(int page, int pageSize) {
+
+        EntityManager em = JpaConfig.getEntityManager();
+
+        try {
+
+            TypedQuery<Product> query = em.createQuery(
+                    "SELECT p FROM Product p " +
+                            "ORDER BY p.createdDate DESC",
+                    Product.class
+            );
+
+            query.setFirstResult(page * pageSize);
+            query.setMaxResults(pageSize);
+
+            return query.getResultList();
+
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public int count() {
+
+        EntityManager em = JpaConfig.getEntityManager();
+
+        try {
+
+            Long total = em.createQuery(
+                    "SELECT COUNT(p) FROM Product p",
+                    Long.class
+            ).getSingleResult();
+
+            return total.intValue();
+
+        } finally {
+            em.close();
+        }
+    }
 }

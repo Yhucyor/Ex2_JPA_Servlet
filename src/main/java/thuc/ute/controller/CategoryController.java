@@ -19,7 +19,6 @@ import jakarta.servlet.http.Part;
 import thuc.ute.entity.Category;
 import thuc.ute.service.ICategoryService;
 import thuc.ute.service.impl.CategoryServiceImpl;
-import thuc.ute.utils.Constants;
 
 @MultipartConfig
 @WebServlet(urlPatterns = {
@@ -140,7 +139,8 @@ public class CategoryController extends HttpServlet {
         category.setCategoryname(categoryname);
         category.setStatus(status);
 
-        String uploadPath = Constants.DIR;
+        String uploadPath =
+                getServletContext().getRealPath("/assets/uploads");
 
         File uploadDir = new File(uploadPath);
 
@@ -246,7 +246,7 @@ public class CategoryController extends HttpServlet {
         category.setStatus(status);
 
         String uploadPath =
-                Constants.DIR;
+                getServletContext().getRealPath("/assets/uploads");
 
         File uploadDir =
                 new File(uploadPath);

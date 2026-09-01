@@ -1,0 +1,152 @@
+package thuc.ute.dao.impl;
+
+import java.util.List;
+
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
+
+import thuc.ute.config.JpaConfig;
+import thuc.ute.dao.IProductDao;
+import thuc.ute.entity.Product;
+
+public class ProductDaoImpl implements IProductDao {
+
+    @Override
+    public List<Product> findAll() {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        try {
+
+            return em.createNamedQuery(
+                    "Product.findAll",
+                    Product.class
+            ).getResultList();
+
+        } finally {
+
+            em.close();
+        }
+    }
+
+    @Override
+    public Product findById(int id) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        try {
+
+            return em.find(
+                    Product.class,
+                    id
+            );
+
+        } finally {
+
+            em.close();
+        }
+    }
+
+    @Override
+    public void insert(Product product) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        EntityTransaction transaction =
+                em.getTransaction();
+
+        try {
+
+            transaction.begin();
+
+            em.persist(product);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw e;
+
+        } finally {
+
+            em.close();
+        }
+    }
+
+    @Override
+    public void update(Product product) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        EntityTransaction transaction =
+                em.getTransaction();
+
+        try {
+
+            transaction.begin();
+
+            em.merge(product);
+
+            transaction.commit();
+
+        } catch (Exception e) {
+
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw e;
+
+        } finally {
+
+            em.close();
+        }
+    }
+
+    @Override
+    public void delete(int id) {
+
+        EntityManager em =
+                JpaConfig.getEntityManager();
+
+        EntityTransaction transaction =
+                em.getTransaction();
+
+        try {
+
+            transaction.begin();
+
+            Product product =
+                    em.find(
+                            Product.class,
+                            id
+                    );
+
+            if (product != null) {
+                em.remove(product);
+            }
+
+            transaction.commit();
+
+        } catch (Exception e) {
+
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+
+            throw e;
+
+        } finally {
+
+            em.close();
+        }
+    }
+}

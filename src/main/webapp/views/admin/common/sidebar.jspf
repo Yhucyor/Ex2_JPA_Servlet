@@ -1,0 +1,103 @@
+<%@ page pageEncoding="UTF-8" %>
+
+<c:url value="/admin/categories" var="categoryListUrl"/>
+<c:url value="/admin/products" var="productListUrl"/>
+<c:url value="/logout" var="logoutUrl"/>
+
+<aside class="sidebar">
+
+    <a href="${categoryListUrl}"
+       class="brand">
+
+        <span class="brand-mark">
+            S
+        </span>
+
+        <span>
+            <strong>Shop Admin</strong>
+            <small>Quản trị hệ thống</small>
+        </span>
+
+    </a>
+
+
+    <div class="profile">
+
+        <img
+                src="https://res.cloudinary.com/gnht4fer/image/upload/v1787802709/categories/pzoxspdcewsifih9kssx.jpg"
+                class="avatar"
+                alt="Admin">
+
+        <div>
+
+            <strong>
+                <c:choose>
+                    <c:when test="${not empty sessionScope.account}">
+                        ${sessionScope.account.username}
+                    </c:when>
+
+                    <c:otherwise>
+                        Admin
+                    </c:otherwise>
+                </c:choose>
+            </strong>
+
+            <span>
+                Quản trị viên
+            </span>
+
+        </div>
+
+    </div>
+
+
+    <nav class="sidebar-menu">
+
+        <a href="${categoryListUrl}"
+           class="menu-item">
+
+            <span class="menu-icon">
+                ▦
+            </span>
+
+            <span>
+                Danh mục
+            </span>
+
+        </a>
+
+
+        <a href="${productListUrl}"
+           class="menu-item">
+
+            <span class="menu-icon">
+                ▣
+            </span>
+
+            <span>
+                Sản phẩm
+            </span>
+
+        </a>
+
+    </nav>
+
+
+    <div class="sidebar-footer">
+
+        <a href="${logoutUrl}"
+           class="logout-button">
+
+            <span class="menu-icon">
+                ↪
+            </span>
+
+            <span>
+                Đăng xuất
+            </span>
+
+        </a>
+
+    </div>
+
+</aside>

@@ -3,163 +3,387 @@
          pageEncoding="UTF-8" %>
 
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
 
 <!DOCTYPE html>
 <html lang="vi">
 
 <head>
+
     <meta charset="UTF-8">
-    <title>Sửa sản phẩm</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Chỉnh sửa sản phẩm</title>
+
+    <link rel="stylesheet"
+          href="${pageContext.request.contextPath}/assets/css/admin.css">
+
 </head>
 
 <body>
 
-<h2>Sửa sản phẩm</h2>
 
-<form action="${pageContext.request.contextPath}/admin/product/update"
-      method="post"
-      enctype="multipart/form-data">
+<%@ include file="../category/common/sidebar.jspf" %>
 
-    <input type="hidden"
-           name="productId"
-           value="${product.productId}">
 
-    <div>
-        <label>Tên sản phẩm:</label>
-        <br>
+<div class="main-wrapper">
 
-        <input type="text"
-               name="productName"
-               value="${product.productName}"
-               required>
-    </div>
 
-    <br>
+    <header class="topbar">
 
-    <div>
-        <label>Giá:</label>
-        <br>
+        <div>
 
-        <input type="number"
-               name="price"
-               min="0"
-               step="0.01"
-               value="${product.price}"
-               required>
-    </div>
+            <span class="topbar-label">
+                Biểu mẫu
+            </span>
 
-    <br>
+            <strong>
+                Chỉnh sửa sản phẩm
+            </strong>
 
-    <div>
-        <label>Số lượng:</label>
-        <br>
+        </div>
 
-        <input type="number"
-               name="quantity"
-               min="0"
-               value="${product.quantity}"
-               required>
-    </div>
 
-    <br>
+        <a href="${pageContext.request.contextPath}/admin/products"
+           class="topbar-action">
 
-    <div>
-        <label>Ảnh hiện tại:</label>
-        <br>
+            Danh sách
 
-        <c:if test="${not empty product.image}">
-            <img
-                    src="${pageContext.request.contextPath}/image?fname=${product.image}"
-                    width="150"
-                    height="120"
-                    alt="${product.productName}">
-        </c:if>
-    </div>
+        </a>
 
-    <br>
+    </header>
 
-    <div>
-        <label>Chọn ảnh mới:</label>
-        <br>
 
-        <input type="file"
-               name="imageFile"
-               accept="image/*">
 
-        <p>
-            Nếu không chọn ảnh mới thì giữ nguyên ảnh hiện tại.
-        </p>
-    </div>
+    <main class="content">
 
-    <br>
 
-    <div>
-        <label>Mô tả:</label>
-        <br>
+        <section class="page-heading compact-heading">
 
-        <textarea name="description"
-                  rows="5"
-                  cols="50">${product.description}</textarea>
-    </div>
+            <div>
 
-    <br>
+                <p class="eyebrow">
+                    Product #${product.productId}
+                </p>
 
-    <div>
-        <label>Category:</label>
-        <br>
+                <h1>
+                    Cập nhật sản phẩm
+                </h1>
 
-        <select name="categoryId"
-                required>
+                <p class="page-description">
+                    Chỉnh sửa thông tin, hình ảnh, danh mục và trạng thái của sản phẩm.
+                </p>
 
-            <c:forEach items="${listCategory}"
-                       var="category">
+            </div>
 
-                <option
-                        value="${category.categoryid}"
-                        ${category.categoryid == product.category.categoryid
-                                ? 'selected'
-                                : ''}>
+        </section>
 
-                    ${category.categoryname}
 
-                </option>
 
-            </c:forEach>
+        <section class="panel product-form-panel">
 
-        </select>
-    </div>
 
-    <br>
+            <div class="current-product">
 
-    <div>
-        <label>Trạng thái:</label>
 
-        <input type="radio"
-               name="status"
-               value="1"
-               ${product.status == 1 ? 'checked' : ''}>
-        Hoạt động
+                <c:choose>
 
-        <input type="radio"
-               name="status"
-               value="0"
-               ${product.status == 0 ? 'checked' : ''}>
-        Khóa
-    </div>
 
-    <br>
+                    <c:when test="${not empty product.image}">
 
-    <button type="submit">
-        Cập nhật sản phẩm
-    </button>
 
-</form>
+                        <c:choose>
 
-<br>
 
-<a href="${pageContext.request.contextPath}/admin/products">
-    Quay lại danh sách
-</a>
+                            <c:when test="${fn:startsWith(product.image, 'http://')
+                                            or fn:startsWith(product.image, 'https://')}">
+
+                                <c:set var="currentImageUrl"
+                                       value="${product.image}"/>
+
+                            </c:when>
+
+
+                            <c:otherwise>
+
+                                <c:url value="/image"
+                                       var="currentImageUrl">
+
+                                    <c:param name="fname"
+                                             value="${product.image}"/>
+
+                                </c:url>
+
+                            </c:otherwise>
+
+
+                        </c:choose>
+
+
+                        <img src="${currentImageUrl}"
+                             class="product-preview-image"
+                             alt="${product.productName}">
+
+
+                    </c:when>
+
+
+                    <c:otherwise>
+
+                        <div class="product-preview-placeholder">
+                            No image
+                        </div>
+
+                    </c:otherwise>
+
+
+                </c:choose>
+
+
+
+                <div class="current-product-info">
+
+                    <span>
+                        Đang chỉnh sửa
+                    </span>
+
+                    <strong>
+                        <c:out value="${product.productName}"/>
+                    </strong>
+
+                    <small>
+                        ID: ${product.productId}
+                    </small>
+
+                </div>
+
+
+            </div>
+
+
+
+            <form action="${pageContext.request.contextPath}/admin/product/update"
+                  method="post"
+                  enctype="multipart/form-data"
+                  class="product-form">
+
+
+                <input type="hidden"
+                       name="productId"
+                       value="${product.productId}">
+
+
+
+                <div class="product-form-grid">
+
+
+                    <label class="form-field product-form-full">
+
+                        <span>
+                            Tên sản phẩm
+                        </span>
+
+                        <input type="text"
+                               name="productName"
+                               value="${product.productName}"
+                               placeholder="Nhập tên sản phẩm"
+                               required
+                               autofocus>
+
+                    </label>
+
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Giá
+                        </span>
+
+                        <input type="number"
+                               name="price"
+                               min="0"
+                               step="0.01"
+                               value="${product.price}"
+                               placeholder="Nhập giá sản phẩm"
+                               required>
+
+                    </label>
+
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Số lượng
+                        </span>
+
+                        <input type="number"
+                               name="quantity"
+                               min="0"
+                               value="${product.quantity}"
+                               placeholder="Nhập số lượng"
+                               required>
+
+                    </label>
+
+
+
+                    <label class="form-field">
+
+                        <span>
+                            Danh mục
+                        </span>
+
+                        <select name="categoryId"
+                                class="form-select"
+                                required>
+
+
+                            <c:forEach items="${listCategory}"
+                                       var="category">
+
+
+                                <option
+                                        value="${category.categoryid}"
+                                        ${category.categoryid == product.category.categoryid
+                                                ? 'selected'
+                                                : ''}>
+
+                                    <c:out value="${category.categoryname}"/>
+
+                                </option>
+
+
+                            </c:forEach>
+
+
+                        </select>
+
+                    </label>
+
+
+
+                    <div class="form-field">
+
+                        <span>
+                            Trạng thái
+                        </span>
+
+
+                        <div class="status-options">
+
+
+                            <label class="radio-line">
+
+                                <input type="radio"
+                                       name="status"
+                                       value="1"
+                                       ${product.status == 1 ? 'checked' : ''}>
+
+                                Hoạt động
+
+                            </label>
+
+
+                            <label class="radio-line">
+
+                                <input type="radio"
+                                       name="status"
+                                       value="0"
+                                       ${product.status == 0 ? 'checked' : ''}>
+
+                                Khóa
+
+                            </label>
+
+
+                        </div>
+
+                    </div>
+
+
+
+                    <label class="form-field product-form-full">
+
+                        <span>
+                            Chọn ảnh mới
+                        </span>
+
+                        <input type="file"
+                               name="imageFile"
+                               accept="image/png,image/jpeg,image/webp">
+
+                        <small class="form-hint">
+                            Nếu không chọn ảnh mới thì hệ thống sẽ giữ nguyên ảnh hiện tại.
+                        </small>
+
+                    </label>
+
+
+
+                    <label class="form-field product-form-full">
+
+                        <span>
+                            Mô tả sản phẩm
+                        </span>
+
+                        <textarea name="description"
+                                  class="form-textarea"
+                                  rows="6"
+                                  placeholder="Nhập mô tả sản phẩm"><c:out value="${product.description}"/></textarea>
+
+                    </label>
+
+
+                </div>
+
+
+
+                <div class="form-actions">
+
+
+                    <button type="submit"
+                            class="primary-button">
+
+                        Lưu thay đổi
+
+                    </button>
+
+
+                    <button type="reset"
+                            class="secondary-button">
+
+                        Khôi phục
+
+                    </button>
+
+
+                    <a href="${pageContext.request.contextPath}/admin/products"
+                       class="text-button">
+
+                        Quay lại
+
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+
+        </section>
+
+
+    </main>
+
+
+</div>
+
 
 </body>
+
 </html>

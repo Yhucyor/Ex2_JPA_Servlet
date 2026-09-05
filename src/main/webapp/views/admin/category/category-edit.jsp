@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/assets/css/admin.css">
 </head>
 <body>
-<%@ include file="common/sidebar.jspf" %>
+<%@ include file="../common/sidebar.jspf" %>
 
 <div class="main-wrapper">
     <header class="topbar">

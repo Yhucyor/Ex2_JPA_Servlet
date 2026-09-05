@@ -62,12 +62,16 @@ public class RegisterController extends HttpServlet {
         String phone =
                 req.getParameter("phone");
 
+        String roleidParam =
+                req.getParameter("roleid");
+
         // 1. Kiểm tra dữ liệu rỗng
         if (isBlank(email)
                 || isBlank(username)
                 || isBlank(fullname)
                 || isBlank(password)
-                || isBlank(confirmPassword)) {
+                || isBlank(confirmPassword)
+                || isBlank(roleidParam)) {
 
             req.setAttribute(
                     "alert",
@@ -78,6 +82,33 @@ public class RegisterController extends HttpServlet {
                     "/views/register.jsp"
             ).forward(req, resp);
 
+            return;
+        }
+
+        // 2. Kiểm tra và chuyển đổi roleid
+        int roleid;
+        try {
+            roleid = Integer.parseInt(roleidParam);
+            
+            // Kiểm tra roleid hợp lệ (1-4)
+            if (roleid < 1 || roleid > 4) {
+                req.setAttribute(
+                        "alert",
+                        "Vai trò không hợp lệ"
+                );
+                req.getRequestDispatcher(
+                        "/views/register.jsp"
+                ).forward(req, resp);
+                return;
+            }
+        } catch (NumberFormatException e) {
+            req.setAttribute(
+                    "alert",
+                    "Vai trò không hợp lệ"
+            );
+            req.getRequestDispatcher(
+                    "/views/register.jsp"
+            ).forward(req, resp);
             return;
         }
 

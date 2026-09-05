@@ -37,20 +37,34 @@ public class WaitingController extends HttpServlet {
         User user =
                 (User) session.getAttribute("account");
 
-        if (user.getRoleid() == 1) {
+        // Phân quyền theo roleid
+        // roleid = 1: Admin       -> Trang quản trị
+        // roleid = 2: Manager     -> Trang quản trị
+        // roleid = 3: User        -> Trang chủ
+        // roleid = 4: Guest       -> Trang chủ (chỉ xem)
 
-            resp.sendRedirect(
-                    req.getContextPath()
-                            + "/admin/categories"
-            );
+        int roleid = user.getRoleid();
 
-        } else {
+        switch (roleid) {
 
-            // Tạm thời chưa có trang user riêng
-            resp.sendRedirect(
-                    req.getContextPath()
-                            + "/admin/categories"
-            );
+            case 1: // Admin
+            case 2: // Manager
+                // Chuyển đến trang quản trị
+                resp.sendRedirect(
+                        req.getContextPath()
+                                + "/admin/categories"
+                );
+                break;
+
+            case 3: // User
+            case 4: // Guest
+            default:
+                // Chuyển đến trang Home
+                resp.sendRedirect(
+                        req.getContextPath()
+                                + "/home"
+                );
+                break;
         }
     }
 }

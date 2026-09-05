@@ -29,9 +29,10 @@ public class DownloadImageController extends HttpServlet {
         String uploadPath =
                 getServletContext().getRealPath("/assets/uploads");
 
-        File file = new File(
-                uploadPath + File.separator + fileName
-        );
+        File file =
+                new File(
+                        uploadPath + File.separator + fileName
+                );
 
         if (!file.exists()) {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);

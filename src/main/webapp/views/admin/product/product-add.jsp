@@ -24,7 +24,7 @@
 <body>
 
 
-<%@ include file="../category/common/sidebar.jspf" %>
+<%@ include file="../common/sidebar.jspf" %>
 
 
 <div class="main-wrapper">
